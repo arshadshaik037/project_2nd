@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Student Registration Form</h1>
+      </div>
+      <form action="/register" method="post">
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Username"
+          required
+        />
+        <input type="email" name="email" placeholder="Enter Email" required />
+        <input type="date" name="dob" required />
+        <select name="gender" required>
+          <option value="" disabled selected>Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <input
+          type="text"
+          name="address"
+          placeholder="Enter Address"
+          required
+        />
+        <input
+          type="text"
+          name="school"
+          placeholder="Enter School Name"
+          required
+        />
+        <input type="text" name="city" placeholder="Enter City" required />
+        <input type="text" name="state" placeholder="Enter State" required />
+        <input
+          type="number"
+          name="pincode"
+          placeholder="Enter Zipcode"
+          required
+        />
+        <input
+          type="text"
+          name="Course"
+          placeholder="Enter Course Name"
+          required
+        />
+        <button type="submit">Register Student</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users List</title>
+    <style>
+      :root {
+        --purple-dark: #6a0dad;
+        --purple-light: #9b59b6;
+        --dark-bg: #121212;
+        --darker-bg: #1e1e1e;
+        --text-light: #ffffff;
+        --text-muted: #b3b3b3;
+        --table-border: #333;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        background: var(--darker-bg);
+        padding: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--purple-dark),
+          var(--purple-light)
+        );
+        padding: 20px 30px;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .content {
+        padding: 25px 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        color: var(--text-light);
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--table-border);
+      }
+
+      th {
+        background-color: rgba(106, 13, 173, 0.2);
+        color: var(--text-light);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+      }
+
+      tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .action-link {
+        color: var(--purple-light);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-right: 15px;
+      }
+
+      .action-link:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+
+      .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        background-color: #c0392b;
+        transform: translateY(-1px);
+      }
+
+      .register-link {
+        display: inline-block;
+        background: linear-gradient(
+          135deg,
+          var(--purple-dark),
+          var(--purple-light)
+        );
+        color: white;
+        padding: 12px 25px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .register-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(
+          135deg,
+          var(--purple-light),
+          var(--purple-dark)
+        );
+      }
+
+      .no-users {
+        text-align: center;
+        padding: 30px;
+        color: var(--text-muted);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          margin: 10px;
+          border-radius: 0;
+        }
+
+        table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        th,
+        td {
+          padding: 10px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Registered Users</h1>
+      </div>
+
+      <div class="content">
+        <% if (users.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Date of Birth</th>
+              <th>Course</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+              <td><%= user.username %></td>
+              <td><%= user.email %></td>
+              <td><%= new Date(user.dob).toLocaleDateString() %></td>
+              <td><%= user.Course %></td>
+              <td>
+                <a href="/users/edit/<%= user._id %>" class="action-link"
+                  >Edit</a
+                >
+                <form
+                  action="/users/delete/<%= user._id %>"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit" class="delete-btn">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <div class="no-users">
+          <p>No users registered yet.</p>
+        </div>
+        <% } %>
+
+        <a href="/register" class="register-link">Register New User</a>
+      </div>
+    </div>
+  </body>
+</html>

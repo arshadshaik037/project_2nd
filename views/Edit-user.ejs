@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <style>
+        :root {
+            --purple-dark: #6a0dad;
+            --purple-light: #9b59b6;
+            --dark-bg: #121212;
+            --darker-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #b3b3b3;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: var(--darker-bg);
+            padding: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+            padding: 20px 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        
+        .form-content {
+            padding: 25px 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid #333;
+            border-radius: 6px;
+            box-sizing: border-box;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--purple-light);
+            box-shadow: 0 0 0 2px rgba(155, 89, 182, 0.3);
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple-light));
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-left: 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--purple-light);
+            text-decoration: underline;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 0;
+            }
+        }
+        
+        /* Custom select arrow */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Edit User Profile</h1>
+        </div>
+        
+        <div class="form-content">
+            <form action="/users/edit/<%= user._id %>" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" value="<%= user.dob.toISOString().split('T')[0] %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender">
+                            <option value="male" <%= user.gender === 'male' ? 'selected' : '' %>>Male</option>
+                            <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Female</option>
+                            <option value="other" <%= user.gender === 'other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address"><%= user.address %></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="school">School/Institution</label>
+                        <input type="text" id="school" name="school" value="<%= user.school %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Course">Course</label>
+                        <input type="text" id="Course" name="Course" value="<%= user.Course %>">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="<%= user.city %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" value="<%= user.state %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" name="pincode" value="<%= user.pincode %>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Update Profile</button>
+                    <a href="/users" class="back-link">Cancel and Return</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
